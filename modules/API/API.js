@@ -465,6 +465,18 @@ class API {
     }
 
     /**
+     * Notify external application (if API is enabled) that the shared doc
+     * button was toggled.
+     *
+     * @returns {void}
+     */
+    notifySharedDocToggled() {
+        this._sendEvent({
+            name: 'shared-doc-changed'
+        });
+    }
+
+    /**
      * Notify external application (if API is enabled) that the large video
      * visibility changed.
      *

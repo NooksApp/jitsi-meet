@@ -878,6 +878,25 @@ class Toolbox extends Component<Props, State> {
     }
 
     /**
+     * Renders a button for toggling shared doc
+     *
+     * @private
+     * @returns {ReactElement|null}
+     */
+    _renderSharedDocButton() {
+        return (
+            <button
+                onClick = {() => {
+                    console.log("got shared doc click")
+                    APP.API.notifySharedDocToggled()
+                }}
+            >
+                Doc
+            </button>
+        )
+    }
+
+    /**
      * Renders a button for toggleing screen sharing.
      *
      * @private
@@ -1241,6 +1260,7 @@ class Toolbox extends Component<Props, State> {
                 <div className = 'button-group-left'>
                     { buttonsLeft.indexOf('desktop') !== -1
                         && this._renderDesktopSharingButton() }
+                    { this._renderSharedDocButton() }
                     { buttonsLeft.indexOf('raisehand') !== -1
                         && <ToolbarButton
                             accessibilityLabel = { t('toolbar.accessibilityLabel.raiseHand') }
