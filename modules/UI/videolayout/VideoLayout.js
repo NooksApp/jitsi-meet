@@ -109,6 +109,14 @@ const VideoLayout = {
         largeVideo.updateContainerSize();
     },
 
+
+    dimAudioFunc(dim) {
+        console.log('In Dim Audio Func in VideoLayout')
+        Object.values(remoteVideos).map((remoteVideo) => {
+            remoteVideo._setAudioVolume(dim)
+        })
+    },
+
     /**
      * Sets the audio level of the video elements associated to the given id.
      *
