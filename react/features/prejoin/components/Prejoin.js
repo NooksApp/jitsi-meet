@@ -278,12 +278,6 @@ class Prejoin extends Component<Props, State> {
                 {showJoinActions && (
                     <div className = 'prejoin-input-area-container'>
                         <div className = 'prejoin-input-area'>
-                            <InputField
-                                onChange = { _setName }
-                                onSubmit = { joinConference }
-                                placeHolder = { t('dialog.enterDisplayName') }
-                                value = { name } />
-
                             <div className = 'prejoin-preview-dropdown-container'>
                                 <InlineDialog
                                     content = { <div className = 'prejoin-preview-dropdown-btns'>
@@ -353,13 +347,7 @@ class Prejoin extends Component<Props, State> {
         }
 
         return (
-            <div className = 'prejoin-checkbox-container'>
-                <ToggleButton
-                    isToggled = { buttonIsToggled }
-                    onClick = { this._onToggleButtonClick }>
-                    {t('prejoin.doNotShow')}
-                </ToggleButton>
-            </div>
+            <div/>
         );
     }
 }
