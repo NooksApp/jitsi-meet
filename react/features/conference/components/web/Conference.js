@@ -1,37 +1,35 @@
 // @flow
 
-import _ from 'lodash';
-import React from 'react';
+import _ from "lodash";
+import React from "react";
 
-import VideoLayout from '../../../../../modules/UI/videolayout/VideoLayout';
-import { getConferenceNameForTitle } from '../../../base/conference';
-import { connect, disconnect } from '../../../base/connection';
-import { translate } from '../../../base/i18n';
-import { connect as reactReduxConnect } from '../../../base/redux';
-import { Chat } from '../../../chat';
-import { Filmstrip } from '../../../filmstrip';
-import { CalleeInfoContainer } from '../../../invite';
-import { LargeVideo } from '../../../large-video';
-import { KnockingParticipantList, LobbyScreen } from '../../../lobby';
-import { Prejoin, isPrejoinPageVisible } from '../../../prejoin';
+import VideoLayout from "../../../../../modules/UI/videolayout/VideoLayout";
+import { getConferenceNameForTitle } from "../../../base/conference";
+import { connect, disconnect } from "../../../base/connection";
+import { translate } from "../../../base/i18n";
+import { connect as reactReduxConnect } from "../../../base/redux";
+import { Chat } from "../../../chat";
+import { Filmstrip } from "../../../filmstrip";
+import { CalleeInfoContainer } from "../../../invite";
+import { LargeVideo } from "../../../large-video";
+import { KnockingParticipantList, LobbyScreen } from "../../../lobby";
+import { Prejoin, isPrejoinPageVisible } from "../../../prejoin";
 import {
-    Toolbox,
     fullScreenChanged,
     setToolboxAlwaysVisible,
-    showToolbox
-} from '../../../toolbox';
-import { LAYOUTS, getCurrentLayout } from '../../../video-layout';
-import { maybeShowSuboptimalExperienceNotification } from '../../functions';
+    showToolbox,
+} from "../../../toolbox/actions.web";
+import { Toolbox } from "../../../toolbox/components/web";
+import { LAYOUTS, getCurrentLayout } from "../../../video-layout";
+import { maybeShowSuboptimalExperienceNotification } from "../../functions";
 import {
     AbstractConference,
-    abstractMapStateToProps
-} from '../AbstractConference';
-import type { AbstractProps } from '../AbstractConference';
+    abstractMapStateToProps,
+} from "../AbstractConference";
+import type { AbstractProps } from "../AbstractConference";
 
-import InviteMore from './InviteMore';
-import Labels from './Labels';
-import { default as Notice } from './Notice';
-import { default as Subject } from './Subject';
+import Labels from "./Labels";
+import { default as Notice } from "./Notice";
 
 declare var APP: Object;
 declare var config: Object;
@@ -45,9 +43,9 @@ declare var interfaceConfig: Object;
  * @type {Array<string>}
  */
 const FULL_SCREEN_EVENTS = [
-    'webkitfullscreenchange',
-    'mozfullscreenchange',
-    'fullscreenchange'
+    "webkitfullscreenchange",
+    "mozfullscreenchange",
+    "fullscreenchange",
 ];
 
 /**
@@ -58,16 +56,15 @@ const FULL_SCREEN_EVENTS = [
  * @type {Object}
  */
 const LAYOUT_CLASSNAMES = {
-    [LAYOUTS.HORIZONTAL_FILMSTRIP_VIEW]: 'horizontal-filmstrip',
-    [LAYOUTS.TILE_VIEW]: 'tile-view',
-    [LAYOUTS.VERTICAL_FILMSTRIP_VIEW]: 'vertical-filmstrip'
+    [LAYOUTS.HORIZONTAL_FILMSTRIP_VIEW]: "horizontal-filmstrip",
+    [LAYOUTS.TILE_VIEW]: "tile-view",
+    [LAYOUTS.VERTICAL_FILMSTRIP_VIEW]: "vertical-filmstrip",
 };
 
 /**
  * The type of the React {@code Component} props of {@link Conference}.
  */
 type Props = AbstractProps & {
-
     /**
      * Whether the local participant is recording the conference.
      */
@@ -95,8 +92,8 @@ type Props = AbstractProps & {
     _showPrejoin: boolean,
 
     dispatch: Function,
-    t: Function
-}
+    t: Function,
+};
 
 /**
  * The conference page of the Web application.
@@ -123,8 +120,9 @@ class Conference extends AbstractConference<Props, *> {
             100,
             {
                 leading: true,
-                trailing: false
-            });
+                trailing: false,
+            }
+        );
 
         // Bind event handler so it is only bound once for every instance.
         this._onFullScreenChange = this._onFullScreenChange.bind(this);
@@ -147,8 +145,10 @@ class Conference extends AbstractConference<Props, *> {
      * returns {void}
      */
     componentDidUpdate(prevProps) {
-        if (this.props._shouldDisplayTileView
-            === prevProps._shouldDisplayTileView) {
+        if (
+            this.props._shouldDisplayTileView ===
+            prevProps._shouldDisplayTileView
+        ) {
             return;
         }
 
@@ -168,8 +168,9 @@ class Conference extends AbstractConference<Props, *> {
     componentWillUnmount() {
         APP.UI.unbindEvents();
 
-        FULL_SCREEN_EVENTS.forEach(name =>
-            document.removeEventListener(name, this._onFullScreenChange));
+        FULL_SCREEN_EVENTS.forEach((name) =>
+            document.removeEventListener(name, this._onFullScreenChange)
+        );
 
         APP.conference.isJoined() && this.props.dispatch(disconnect());
     }
@@ -184,40 +185,42 @@ class Conference extends AbstractConference<Props, *> {
         const {
             // XXX The character casing of the name filmStripOnly utilized by
             // interfaceConfig is obsolete but legacy support is required.
-            filmStripOnly: filmstripOnly
+            filmStripOnly: filmstripOnly,
         } = interfaceConfig;
         const {
             _iAmRecorder,
             _isLobbyScreenVisible,
             _layoutClassName,
-            _showPrejoin
+            _showPrejoin,
         } = this.props;
         const hideLabels = filmstripOnly || _iAmRecorder;
 
         return (
             <div
-                className = { _layoutClassName }
-                id = 'videoconference_page'
-                onMouseMove = { this._onShowToolbar }>
-
+                className={_layoutClassName}
+                id="videoconference_page"
+                onMouseMove={this._onShowToolbar}
+            >
                 <Notice />
-                <Subject />
+                {/* <Subject /> */}
                 {/* <InviteMore /> */}
-                <div id = 'videospace'>
+                <div id="videospace">
                     <LargeVideo />
                     <KnockingParticipantList />
-                    <Filmstrip filmstripOnly = { filmstripOnly } />
-                    { hideLabels || <Labels /> }
+                    <Filmstrip filmstripOnly={filmstripOnly} />
+                    {hideLabels || <Labels />}
                 </div>
 
-                { filmstripOnly || _showPrejoin || _isLobbyScreenVisible || <Toolbox /> }
-                { filmstripOnly || <Chat /> }
+                {filmstripOnly || _showPrejoin || _isLobbyScreenVisible || (
+                    <Toolbox />
+                )}
+                {filmstripOnly || <Chat />}
 
-                { this.renderNotificationsContainer() }
+                {this.renderNotificationsContainer()}
 
                 <CalleeInfoContainer />
 
-                { !filmstripOnly && _showPrejoin && <Prejoin />}
+                {!filmstripOnly && _showPrejoin && <Prejoin />}
             </div>
         );
     }
@@ -256,8 +259,9 @@ class Conference extends AbstractConference<Props, *> {
         APP.UI.registerListeners();
         APP.UI.bindEvents();
 
-        FULL_SCREEN_EVENTS.forEach(name =>
-            document.addEventListener(name, this._onFullScreenChange));
+        FULL_SCREEN_EVENTS.forEach((name) =>
+            document.addEventListener(name, this._onFullScreenChange)
+        );
 
         const { dispatch, t } = this.props;
 
@@ -265,8 +269,8 @@ class Conference extends AbstractConference<Props, *> {
 
         maybeShowSuboptimalExperienceNotification(dispatch, t);
 
-        interfaceConfig.filmStripOnly
-            && dispatch(setToolboxAlwaysVisible(true));
+        interfaceConfig.filmStripOnly &&
+            dispatch(setToolboxAlwaysVisible(true));
     }
 }
 
@@ -281,11 +285,12 @@ class Conference extends AbstractConference<Props, *> {
 function _mapStateToProps(state) {
     return {
         ...abstractMapStateToProps(state),
-        _iAmRecorder: state['features/base/config'].iAmRecorder,
-        _isLobbyScreenVisible: state['features/base/dialog']?.component === LobbyScreen,
+        _iAmRecorder: state["features/base/config"].iAmRecorder,
+        _isLobbyScreenVisible:
+            state["features/base/dialog"]?.component === LobbyScreen,
         _layoutClassName: LAYOUT_CLASSNAMES[getCurrentLayout(state)],
         _roomName: getConferenceNameForTitle(state),
-        _showPrejoin: isPrejoinPageVisible(state)
+        _showPrejoin: isPrejoinPageVisible(state),
     };
 }
 

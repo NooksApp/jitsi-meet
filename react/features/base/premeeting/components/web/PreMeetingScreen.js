@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 
-import { AudioSettingsButton, VideoSettingsButton } from '../../../../toolbox';
+import { AudioSettingsButton, VideoSettingsButton } from '../../../../toolbox/components/web';
 
 import CopyMeetingUrl from './CopyMeetingUrl';
 import Preview from './Preview';
@@ -38,6 +38,11 @@ type Props = {
      * Title of the screen.
      */
     title: string,
+
+    /**
+     * The 'Skip prejoin' button to be rendered (if any).
+     */
+     skipPrejoinButton?: React$Node,
 
     /**
      * True if the preview overlay should be muted, false otherwise.
@@ -97,6 +102,7 @@ export default class PreMeetingScreen extends PureComponent<Props> {
                         <AudioSettingsButton visible = { true } />
                         <VideoSettingsButton visible = { true } />
                     </div>
+                    { this.props.skipPrejoinButton }
                     { this.props.footer }
                 </div>
             </div>
