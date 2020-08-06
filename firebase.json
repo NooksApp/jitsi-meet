@@ -1,0 +1,35 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/ios/**",
+      "**/android/**",
+      "**/react/**"
+    ],
+    "redirects": [ 
+      // {
+      //   "source": "/config.js",
+      //   "destination": "/home/qua/jitsi-meet-firebase/config.js",
+      //   "type": 301
+      // },
+       {
+         "source": "/external_api.js",
+         "destination": "libs/external_api.min.js",
+         "type": 301
+       }  
+    ],
+     // Add the "rewrites" attribute within "hosting"
+    "rewrites": [ {
+      // Serves index.html for requests to files or directories that do not exist
+      "source": "**",
+      "destination": "/index.html"
+    }, {
+      // Excludes specified pathways from rewrites
+      "source": "!/@(libs|css|static|images|fonts|lang|sounds|connection_optimization|.well-known)/**",
+      "destination": "/index.html"
+    } ]
+  }
+}
