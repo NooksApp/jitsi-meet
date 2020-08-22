@@ -76,7 +76,7 @@ var config = {
 
     hiddenDomain: "recorder.meet.jit.si",
     dropbox: {
-        appKey: "3v5iyto7n7az02w",
+        appKey: "u5bo90twbx6lod7",
     },
     transcribingEnabled: false,
     enableRecording: true,
