@@ -1,6 +1,7 @@
 BUILD_DIR = build
 CLEANCSS = ./node_modules/.bin/cleancss
 DEPLOY_DIR = libs
+PUBLIC_DIR = public
 LIBJITSIMEET_DIR = node_modules/lib-jitsi-meet/
 LIBFLAC_DIR = node_modules/libflacjs/dist/min/
 RNNOISE_WASM_DIR = node_modules/rnnoise-wasm/dist/
@@ -14,6 +15,27 @@ WEBPACK = ./node_modules/.bin/webpack
 WEBPACK_DEV_SERVER = ./node_modules/.bin/webpack-dev-server
 
 all: compile deploy clean
+
+.NOTPARALLEL:
+public: compile deploy public-init public-create clean
+
+public-init:
+	rm -fr $(PUBLIC_DIR)
+	mkdir -p $(PUBLIC_DIR)/css
+	mkdir -p $(PUBLIC_DIR)/images
+	mkdir -p $(PUBLIC_DIR)/sounds
+	mkdir -p $(PUBLIC_DIR)/fonts
+
+public-create:
+	mv $(STYLES_DESTINATION) $(PUBLIC_DIR)/$(STYLES_DESTINATION)
+	mv $(DEPLOY_DIR) $(PUBLIC_DIR)/$(DEPLOY_DIR)
+	cp index.html $(PUBLIC_DIR)/index.html
+	cp -r images $(PUBLIC_DIR)/images
+	cp -r sounds $(PUBLIC_DIR)/sounds
+	cp -r fonts $(PUBLIC_DIR)/fonts
+	cp config.js $(PUBLIC_DIR)/config.js
+	cp logging_config.js $(PUBLIC_DIR)/logging_config.js
+	cp interface_config.js $(PUBLIC_DIR)/interface_config.js
 
 compile:
 	$(WEBPACK) -p
