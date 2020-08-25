@@ -111,6 +111,7 @@ function changeParticipantNumber(APIInstance, number) {
  *
  * @param {string} domain - The domain name of the server that hosts the
  * conference.
+ * @param {boolean} roomInPath - Whether to add the room to parameters.
  * @param {string} [options] - Another optional parameters.
  * @param {Object} [options.configOverwrite] - Object containing configuration
  * options defined in config.js to be overridden.
@@ -122,13 +123,13 @@ function changeParticipantNumber(APIInstance, number) {
  * @param {string} [options.roomName] - The name of the room to join.
  * @returns {string} The URL.
  */
-function generateURL(domain, options = {}) {
+function generateURL(domain, roomInPath, options = {}) {
     return urlObjectToString({
         ...options,
         url:
             `${options.noSSL ? 'http' : 'https'}://${
                 domain}/#jitsi_meet_external_api_id=${id}`
-    });
+    }, roomInPath);
 }
 
 /**
@@ -219,6 +220,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
      *
      * @param {string} domain - The domain name of the server that hosts the
      * conference.
+     * @param {boolean} roomInPath - Whether to add the room to parameters.
      * @param {Object} [options] - Optional arguments.
      * @param {string} [options.roomName] - The name of the room to join.
      * @param {number|string} [options.width] - Width of the iframe. Check
@@ -246,7 +248,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
      * @param {string}  [options.e2eeKey] - The key used for End-to-End encryption.
      * THIS IS EXPERIMENTAL.
      */
-    constructor(domain, ...args) {
+    constructor(domain, roomInPath = true, ...args) {
         super();
         const {
             roomName = '',
@@ -265,7 +267,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
         } = parseArguments(args);
 
         this._parentNode = parentNode;
-        this._url = generateURL(domain, {
+        this._url = generateURL(domain, roomInPath, {
             configOverwrite,
             interfaceConfigOverwrite,
             jwt,
