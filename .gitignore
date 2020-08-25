@@ -2,6 +2,7 @@
 .*.tmp
 deploy-local.sh
 libs/
+public/
 all.css
 *css.map
 .remote-sync.json
@@ -53,6 +54,9 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# firebase
+.firebase
+
 # BUCK
 #
 buck-out/
@@ -77,6 +81,7 @@ android/app/release
 # VSCode files
 android/.project
 android/.settings/org.eclipse.buildship.core.prefs
+.vscode
 
 # Secrets
 android/app/dropbox.key

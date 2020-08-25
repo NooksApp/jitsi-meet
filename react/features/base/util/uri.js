@@ -349,6 +349,12 @@ export function parseURIString(uri: ?string) {
     const contextRootEndIndex = pathname.lastIndexOf('/');
     let room = pathname.substring(contextRootEndIndex + 1) || undefined;
 
+    const params = parseURLParams(obj);
+
+    if ('room' in params) {
+        room = params.room;
+    }
+
     if (room) {
         const fixedRoom = _fixRoom(room);
 
@@ -450,10 +456,11 @@ export function toURLString(obj: ?(Object | string)): ?string {
  * of Web's ExternalAPI.
  *
  * @param {Object} o - The URL to return a {@code String} representation of.
+ * @param {boolean} roomInPath - Wether to append the room to the path or add as param.
  * @returns {string} - A {@code String} representation of the specified
  * {@code Object}.
  */
-export function urlObjectToString(o: Object): ?string {
+export function urlObjectToString(o: Object, roomInPath = true): ?string {
     // First normalize the given url. It come as o.url or split into o.serverURL
     // and o.room.
     let tmp;
@@ -516,7 +523,7 @@ export function urlObjectToString(o: Object): ?string {
     // Web's ExternalAPI roomName
     const room = o.roomName || o.room;
 
-    if (room
+    if (roomInPath && room
             && (url.pathname.endsWith('/')
                 || !url.pathname.endsWith(`/${room}`))) {
         pathname.endsWith('/') || (pathname += '/');
@@ -565,7 +572,9 @@ export function urlObjectToString(o: Object): ?string {
             hash += urlParamsString;
         }
     }
-
+    if (!roomInPath) {
+        hash += `&room="${room}"`; // add the room as a parameter
+    }
     url.hash = hash;
 
     return url.toString() || undefined;
