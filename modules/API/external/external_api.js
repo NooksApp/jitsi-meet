@@ -248,7 +248,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
      * @param {string}  [options.e2eeKey] - The key used for End-to-End encryption.
      * THIS IS EXPERIMENTAL.
      */
-    constructor(domain, roomInPath = true, ...args) {
+    constructor(domain, ...args) {
         super();
         const {
             roomName = '',
@@ -267,7 +267,7 @@ export default class JitsiMeetExternalAPI extends EventEmitter {
         } = parseArguments(args);
 
         this._parentNode = parentNode;
-        this._url = generateURL(domain, roomInPath, {
+        this._url = generateURL(domain, true, {
             configOverwrite,
             interfaceConfigOverwrite,
             jwt,
