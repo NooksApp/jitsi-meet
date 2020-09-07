@@ -118,6 +118,9 @@ class Watermarks extends Component<Props, State> {
             showJitsiWatermarkForGuests
                 = interfaceConfig.SHOW_WATERMARK_FOR_GUESTS;
         }
+        showJitsiWatermark = false;
+        showBrandWatermark = false;
+        showJitsiWatermarkForGuests = false;
 
         this.state = {
             brandWatermarkLink:

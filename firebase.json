@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "jitsi-dev",
     "public": ".",
     "ignore": [
       "firebase.json",
