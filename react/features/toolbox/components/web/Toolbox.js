@@ -22,8 +22,10 @@ import {
     IconRaisedHand,
     IconRec,
     IconShareDesktop,
-    IconShareVideo
+    IconShareVideo,
+    IconPhone
 } from '../../../base/icons';
+
 import {
     getLocalParticipant,
     getParticipants,
@@ -38,6 +40,8 @@ import { EmbedMeetingDialog } from '../../../embed-meeting';
 import { SharedDocumentButton } from '../../../etherpad';
 import { openFeedbackDialog } from '../../../feedback';
 import { beginAddPeople } from '../../../invite';
+import { beginDialInDialog } from '../../../dial-in';
+
 import { openKeyboardShortcutsDialog } from '../../../keyboard-shortcuts';
 import {
     LocalRecordingButton,
@@ -238,6 +242,8 @@ class Toolbox extends Component<Props, State> {
         this._onShortcutToggleVideoQuality = this._onShortcutToggleVideoQuality.bind(this);
         this._onToolbarOpenFeedback = this._onToolbarOpenFeedback.bind(this);
         this._onToolbarOpenInvite = this._onToolbarOpenInvite.bind(this);
+        this._onToolbarOpenDialInDialog = this._onToolbarOpenDialInDialog.bind(this);
+
         this._onToolbarOpenKeyboardShortcuts = this._onToolbarOpenKeyboardShortcuts.bind(this);
         this._onToolbarOpenSpeakerStats = this._onToolbarOpenSpeakerStats.bind(this);
         this._onToolbarOpenEmbedMeeting = this._onToolbarOpenEmbedMeeting.bind(this);
@@ -716,6 +722,18 @@ class Toolbox extends Component<Props, State> {
         this.props.dispatch(beginAddPeople());
     }
 
+    _onToolbarOpenDialInDialog: () => void;
+
+    /**
+     * Opens the dial-in dialog.
+     * 
+     * @private
+     * @returns {void}
+     */
+    _onToolbarOpenDialInDialog() {
+        this.props.dispatch(beginDialInDialog());
+    }
+
     _onToolbarOpenKeyboardShortcuts: () => void;
 
     /**
@@ -1075,7 +1093,13 @@ class Toolbox extends Component<Props, State> {
             this._shouldShowButton('help')
                 && <HelpButton
                     key = 'help'
-                    showLabel = { true } />
+                    showLabel = { true } />,
+            <OverflowMenuItem
+                accessibilityLabel = { 'Click for Phone Number' }
+                icon = { IconPhone }
+                key = 'dial-in'
+                onClick = { this._onToolbarOpenDialInDialog }
+                text = { 'Dial-In' } />
         ];
     }
 
