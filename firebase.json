@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "jitsi-dev",
+    "site": "nooks-277015",
     "public": ".",
     "ignore": [
       "firebase.json",

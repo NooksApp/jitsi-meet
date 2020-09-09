@@ -82,6 +82,13 @@ export function shouldDisplayTileView(state: Object = {}) {
         return false;
     }
 
+    const filmstripOnly
+        = typeof interfaceConfig === 'object' && interfaceConfig.filmStripOnly;
+
+    if (filmstripOnly) {
+        return false;
+    }
+
     const { tileViewEnabled } = state['features/video-layout'];
 
     if (tileViewEnabled !== undefined) {
@@ -110,6 +117,7 @@ export function shouldDisplayTileView(state: Object = {}) {
 
         // There is a shared YouTube video in the meeting
         || isYoutubeVideoPlaying(state)
+
     );
 
     return !shouldDisplayNormalMode;
