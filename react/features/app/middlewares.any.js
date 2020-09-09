@@ -29,6 +29,7 @@ import '../etherpad/middleware';
 import '../filmstrip/middleware';
 import '../follow-me/middleware';
 import '../invite/middleware';
+import '../dial-in/middleware';
 import '../large-video/middleware';
 import '../lobby/middleware';
 import '../notifications/middleware';
