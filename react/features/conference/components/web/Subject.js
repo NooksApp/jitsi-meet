@@ -10,6 +10,8 @@ import ConferenceTimer from '../ConferenceTimer';
 
 import ParticipantsCount from './ParticipantsCount';
 
+declare var interfaceConfig: Object;
+
 /**
  * The type of the React {@code Component} props of {@link Subject}.
  */
@@ -49,7 +51,7 @@ class Subject extends Component<Props> {
         const { _showParticipantCount, _subject, _visible } = this.props;
 
         return (
-            <div className = { `subject ${_visible ? 'visible' : ''}` }>
+            <div className = { `subject ${_visible && !interfaceConfig.filmStripOnly ? 'visible' : ''}` }>
                 {/* <span className = 'subject-text'>{ _subject }</span> */}
                 { _showParticipantCount && <ParticipantsCount /> }
                 <ConferenceTimer />
