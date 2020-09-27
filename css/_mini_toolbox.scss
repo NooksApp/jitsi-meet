@@ -51,6 +51,8 @@
 
 .filmstrip-toolbox {
     flex-direction: column;
+    height: 100%;
+    margin-top: 8px;
 
     .toolbox-button {
         &:nth-child(1) {

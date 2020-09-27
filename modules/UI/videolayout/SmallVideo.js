@@ -32,6 +32,7 @@ import {
 /* eslint-enable no-unused-vars */
 
 const logger = Logger.getLogger(__filename);
+declare var interfaceConfig: Object;
 
 /**
  * Display mode constant used when video is being displayed on the small video.
@@ -471,7 +472,7 @@ export default class SmallVideo {
     selectDisplayMode(input) {
         if (!input.tileViewActive && input.isScreenSharing) {
             return input.isHovered ? DISPLAY_AVATAR_WITH_NAME : DISPLAY_AVATAR;
-        } else if (input.isCurrentlyOnLargeVideo && !input.tileViewActive) {
+        } else if (input.isCurrentlyOnLargeVideo && !input.tileViewActive && !interfaceConfig.filmStripOnly) {
             // Display name is always and only displayed when user is on the stage
             return input.isVideoPlayable && !input.isAudioOnly ? DISPLAY_BLACKNESS_WITH_NAME : DISPLAY_AVATAR_WITH_NAME;
         } else if (input.isVideoPlayable && input.hasVideo && !input.isAudioOnly) {
