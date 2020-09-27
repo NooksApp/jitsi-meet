@@ -91,9 +91,7 @@ class Watermarks extends Component<Props, State> {
         } else {
             showBrandWatermark = interfaceConfig.SHOW_BRAND_WATERMARK;
         }
-        showJitsiWatermark = false;
         showBrandWatermark = false;
-        showJitsiWatermarkForGuests = false;
 
         this.state = {
             brandWatermarkLink:
@@ -265,6 +263,7 @@ function _mapStateToProps(state, ownProps) {
         _logoUrl = ownProps.defaultJitsiLogoURL || DEFAULT_LOGO_URL;
         _logoLink = JITSI_WATERMARK_LINK;
     }
+    _showJitsiWatermark = false;
 
     return {
         _logoLink,
